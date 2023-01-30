@@ -99,7 +99,7 @@ public class Fecha {
 	 * 
 	 * @param anio año de la fecha introducido por parámetro
 	 */
-	public void setAño(int anio) {
+	public void setAnio(int anio) {
 		this.anio = anio;
 	}
 
