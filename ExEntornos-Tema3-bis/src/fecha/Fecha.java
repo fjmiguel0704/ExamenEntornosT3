@@ -1,6 +1,7 @@
 package fecha;
 
 public class Fecha {
+	public static final int DIEZ = 10;
 	private int dia;
 	private int mes;
 	private int anio;
@@ -19,10 +20,10 @@ public class Fecha {
 	}
 
 	// Constructor copia
-	public Fecha(final Fecha f) {
-		dia = f.dia;
-		mes = f.mes;
-		anio = f.anio;
+	public Fecha(final Fecha date) {
+		dia = date.dia;
+		mes = date.mes;
+		anio = date.anio;
 	}
 
 	// getters y setters
@@ -52,37 +53,39 @@ public class Fecha {
 
 	// Método fecha correcta
 	public boolean fechaCorrecta() {
-		boolean diaCorrecto, mesCorrecto, anioCorrecto;
+		boolean diaCorrecto;
+		boolean mesCorrecto;
+		boolean anioCorrecto;
 		anioCorrecto = anio > 0;
 		mesCorrecto = mes >= 1 && mes <= 12;
+		boolean diaMayor1 = dia >= 1;
 		switch (mes) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = dia >= 1 && dia <= 29;
+				diaCorrecto = diaMayor1 && dia <= 29;
 			} else {
-				diaCorrecto = dia >= 1 && dia <= 28;
+				diaCorrecto = diaMayor1 && dia <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = dia >= 1 && dia <= 30;
+			diaCorrecto = diaMayor1 && dia <= 30;
 			break;
 		default:
-			diaCorrecto = dia >= 1 && dia <= 31;
+			diaCorrecto = diaMayor1 && dia <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
 
 	// Método esBisiesto. Solo lo usa fechaCorrecta, por eso es privado
 	private boolean esBisiesto() {
-		boolean esBisiesto = (anio % 4 == 0 && anio % 100 != 0 || anio % 400 == 0);
-		return esBisiesto;
+		return anio % 4 == 0 && anio % 100 != 0 || anio % 400 == 0;
 	}
 
 	// Método diaSiguiente
-	public void diaSiguiente() {
+	public void nextDay() {
 		dia++;
 		if (!fechaCorrecta()) {
 			dia = 1;
@@ -97,11 +100,11 @@ public class Fecha {
 	// Método toString
 	public String toString() {
 		String fechaFinal = "";
-		if (dia < 10 && mes < 10) {
+		if (dia < DIEZ && mes < DIEZ) {
 			fechaFinal = "0" + dia + "-0" + mes + "-" + anio;
-		} else if (dia < 10 && mes >= 10) {
+		} else if (dia < DIEZ && mes >= DIEZ) {
 			fechaFinal = "0" + dia + "-" + mes + "-" + anio;
-		} else if (dia >= 10 && mes < 10) {
+		} else if (dia >= DIEZ && mes < DIEZ) {
 			fechaFinal = dia + "-0" + mes + "-" + anio;
 		} else {
 			fechaFinal = dia + "-" + mes + "-" + anio;
